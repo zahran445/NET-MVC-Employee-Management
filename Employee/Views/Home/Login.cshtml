@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_loginView.cshtml";
+
+}
+
+<h2>Login</h2>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    html, body {
+        display: flex;
+        justify-content: center;
+        font-family: Roboto, Arial, sans-serif;
+        font-size: 15px;
+    }
+
+    form {
+        border: 5px solid #f1f1f1;
+    }
+
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 16px 8px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #8ebf42;
+        color: white;
+        padding: 14px 0;
+        margin: 10px 0;
+        border: none;
+        cursor: grabbing;
+        width: 110px;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 18px;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    .frmLogin {
+        text-align: left;
+        margin: 24px 50px 12px;
+    }
+
+    .frmLogin {
+        padding: 16px 0;
+        text-align: left;
+    }
+
+    span.pswd {
+        float: right;
+        padding-top: 0;
+        padding-right: 15px;
+    }
+      /* Change styles for span on extra small screens */
+      @*@media screen and (max-width: 300px) {
+      span.psw {
+      display: block;
+      float: none;
+      }*@
+</style>
+
+<form name="frmLogin" id="frmLogin">
+    <h2>LOGIN</h2>
+    <div class="form-row" align="center">
+
+        <label>User Name</label>
+        <input type="text" id="UserName" name="UserName" placeholder="User Name" required="required" /><br />
+
+        <label>Password</label>
+        <input type="password" id="Pswd" name="Pswd" placeholder="Password" required="required" /><br />
+
+        <button type="button" name="save" id="save" onclick="Login(); return false">Login</button>
+
+    </div>
+</form>
+
+<script>
+    function Login() {
+
+        var username = $('#UserName').val();
+        var password = $('#Pswd').val();
+        //alert(username)
+        //alert(password)
+
+        var frm = $(document.frmLogin);
+        var frmdata = JSON.stringify(frm.serializeArray());
+        console.log(frmdata);
+        var ssdata = JSON.stringify({ sdata: frmdata });
+        console.log(ssdata);
+        $.ajax({
+            type: "POST",
+            url: "/Home/CheckLogin",
+            dataType: "JSON",
+            contentType: "JSON",
+            data: ssdata,
+            success: function (result) {
+                if (result == "Sucess") {
+                    alert("Successfully Saved");
+                    window.location.href = "/Employee/EmployeeList";
+                }
+                else {
+                    alert("Error occured");
+                    //window.location.href = "/newlogin/error";
+                }
+            },
+            error: function (xhr, status, error) { }
+        });
+    }
+</script>
+
+

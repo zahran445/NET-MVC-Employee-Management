@@ -1,0 +1,67 @@
+﻿
+
+@{
+    ViewBag.Title = "EmployeeList";
+}
+
+
+
+
+<h2>LeaveList</h2>
+
+
+
+
+<button onclick="addleave()" class="btn btn-primary">Apply Leave</button>
+<hr />
+
+
+<table>
+    <thead>
+        <tr>
+            <th style="border:1px solid black">LeaveId</th>
+            <th style="border:1px solid black">Employee Name</th>
+            
+            <th style="border:1px solid black">LeaveType</th>
+            <th style="border:1px solid black">FromDate</th>
+            <th style="border:1px solid black">ToDate</th>
+            <th style="border:1px solid black">Days</th>
+            <th style="border:1px solid black">Reason</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in Model)
+        {
+            <tr>
+                <td style="border:1px solid black">@row.LeaveId</td>
+                <td style="border:1px solid black">@row.EmployeeName</td>
+                <td style="border:1px solid black">@row.LeaveType</td>
+                <td style="border:1px solid black">@row.FromDate</td>
+
+                <td style="border:1px solid black">@row.ToDate</td>
+                <td style="border:1px solid black">@row.Days</td>
+                <td style="border:1px solid black">@row.Reason</td>
+             
+                @*<td style="border:1px solid black">
+                    <button onclick="edit(@row.Eid)">Editt </button>
+                </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    //function edit(id) {
+    //    alert(id);
+    //    window.location.href = "/Employee/AddEmployee?id=" + id;
+    //}
+
+ 
+  
+    function addleave() {
+        window.location.href = "/Employee/addLeave"
+    }
+
+</script>

@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Add Employee";
+
+    var departmentList = ViewBag.DepartmentList as List<Employee.Models.Data.TblMaster>;
+
+}
+
+
+
+<h1> Department List</h1>
+
+<button onclick="trip()" class="btn btn-primary">Add Department</button>
+<hr />
+<table>
+    <thead>
+        <tr>
+            <th style="border:1px solid black">ID</th>
+            <th style="border:1px solid black">Department Name</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in departmentList)
+        {
+            <tr>
+                <td style="border:1px solid black">@row.MasterID</td>
+                <td style="border:1px solid black">@row.MasterName</td>
+                <td>
+                    <button onclick="edit(@row.MasterID)">Editt </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    function edit(id) {
+        alert(id);
+        window.location.href = "/Employee/AddDepartment?id=" + id;
+    }
+
+    function trip() {
+        window.location.href = "/Employee/AddDepartment"
+    }
+</script>

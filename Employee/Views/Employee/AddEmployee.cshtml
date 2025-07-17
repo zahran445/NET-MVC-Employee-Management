@@ -1,0 +1,148 @@
+﻿
+    @{
+        ViewBag.Title = "Add Employee";
+
+        var departmentList = ViewBag.DepartmentList as List<Employee.Models.Data.TblMaster>;
+        var designationList = ViewBag.DesignationList as List<Employee.Models.Data.TblMaster>;
+    }
+}
+
+
+<div class="card">
+    <h2 class="mb-4">Add Employee Details</h2>
+
+    <form id="frmLogin">
+        <div class="form-group">
+            <label for="sno" class="form-label">UID</label>
+            <input type="number" class="form-control" id="eid" name="Id" value="@(Model==null?"":Model.Eid)">
+        </div>
+
+        <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="Name" required value="@(Model==null?"":Model.Name)">
+        </div>
+
+
+        <div class="form-group">
+            <label for="age" class="form-label">Age</label>
+            <input type="number" class="form-control" id="age" name="Age" required value="@(Model==null?"":Model.Age)">
+        </div>
+
+        <div class="form-group">
+            <label for="joindate" class="form-label">Date of Joining</label>
+            <input type="date" class="form-control" id="joindate" name="JoinDate" required value="@(Model==null?"":Model.JoinDate)">
+        </div>
+
+        <div class="form-group">
+            <label for="dob" class="form-label">DOB</label>
+            <input type="date" class="form-control" id="dob" name="dob" required value="@(Model==null?"":Model.DOB)">
+        </div>
+
+        <div class="form-group">
+            <label for="salary" class="form-label">Salary</label>
+            <input type="number" class="form-control" id="salary" name="Salary" required value="@(Model==null?"":Model.Salary)">
+        </div>
+
+        @*<div class="form-group mt-3">
+            <label for="department" class="form-label">Department</label>*@
+
+        @*<div class="form-group mt-3">
+            <label for="designation" class="form-label">Designation</label>*@
+
+        <div class="form-group">
+            <label for="Department" class="form-label">Department</label>
+            <select class="form-control" id="Department" name="Department" required>
+                <option value="" disabled selected>-- Select Department --</option>
+                @foreach (var dept in departmentList)
+                {
+                    <option value="@dept.MasterID" @(Model != null && Model.DepId == dept.MasterName ? "selected" : "")>@dept.MasterName</option>
+                }
+
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="Designation" class="form-label">Designation</label>
+            <select class="form-control" id="Designation" name="Designation" required>
+                <option value="" disabled selected>-- Select Designation --</option>
+                @foreach (var desig in designationList)
+                {
+                    <option value="@desig.MasterID" @(Model != null && Model.DesigId == desig.MasterName ? "selected" : "")>@desig.MasterName</option>
+                }
+            </select>
+        </div>
+
+
+
+
+        <div class="form-group mt-3">
+            <label class="form-label d-block">Sex</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Sex" id="inlineRadio1" value="Male" @(Model != null && Model.Sex == "Male" ? "checked" : "")>
+                <label class="form-check-label" for="inlineRadio1">M</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Sex" id="inlineRadio2" value="Female" @(Model != null && Model.Sex == "Female" ? "checked" : "")>
+                <label class="form-check-label" for="inlineRadio2">F</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="phno" class="form-label">PhoneNumber</label>
+            <input type="number" class="form-control" id="phno" name="phno" required value="@(Model==null?"":Model.PhNo)">
+        </div>
+
+        @*<div class="form-check">
+                <input class="form-check-input" type="checkbox" value="Student" id="flexCheckDefault" name="Type">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Student
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="Employee" id="flexCheckChecked" name="Type" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    Employee
+                </label>
+            </div>*@
+
+
+
+
+
+
+        <hr />
+        <button type="button" onclick="addEmployee()" class="btn btn-primary">Submit</button>
+    </form>
+
+
+
+</div>
+
+
+<script>
+    function addEmployee() {
+
+        var frm = $('#frmLogin')
+        var frmdata = JSON.stringify(frm.serializeArray());
+        console.log(frmdata);
+
+        $.ajax({
+            type: "POST",
+            url: "/Employee/SaveEmployee",
+            dataType: "JSON",
+            contentType: "JSON",
+            data: JSON.stringify({ sdata: frmdata }),
+            success: function (response) {
+                if (response == "Sucess") {
+                    alert("Successfully Saved");
+                    window.location.href = "/Employee/EmployeeList";
+                }
+                else {
+                    alert("Error occured");
+                    //window.location.href = "/newlogin/error";
+                }
+            },
+            error: function (xhr, status, error) { }
+        });
+    }
+</script>

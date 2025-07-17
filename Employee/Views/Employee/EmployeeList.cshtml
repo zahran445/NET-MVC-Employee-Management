@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeList";
+}
+
+<form id="frmStudent" action="\Employee\PrintReport" method="post" name="frmStudent" target="_blank">
+    <input id="hdid" name="hdid" type="hidden" value="" />
+</form>
+
+
+<input onclick="window.open('/Employee/PrintReport?type=1', '_blank');" class="btn btn-primary btn-sm" type="button" value="Print Department Wise">
+<input onclick="window.open('/Employee/PrintReport?type=2', '_blank');" class="btn btn-primary btn-sm" type="button" value="Print Designation Wise">
+<input onclick="window.open('/Employee/PrintReport?type=3', '_blank');" class="btn btn-primary btn-sm" type="button" value="Print Leave Wise">
+
+<h2>EmployeeList</h2>
+<button onclick="trip()" class="btn btn-primary">Add Employee</button>
+
+
+<button onclick="PrintReport()" class="btn btn-primary">PrintReport</button>
+
+
+<button onclick="addleave()" class="btn btn-primary">Apply Leave</button>
+<hr />
+
+
+<table>
+    <thead>
+        <tr>
+            <th style="border:1px solid black">ID</th>
+            <th style="border:1px solid black">Name</th>
+            <th style="border:1px solid black">Age</th>
+            <th style="border:1px solid black">Date of Joining</th>
+            <th style="border:1px solid black">Date of Birth</th>
+            <th style="border:1px solid black">Salary</th>
+            <th style="border:1px solid black">Department Name</th>
+            <th style="border:1px solid black">Designation Name</th>
+            <th style="border:1px solid black">Sex</th>
+            <th style="border:1px solid black">Phone Number</th>
+            <th style="border:1px solid black">Number of leaves Available</th>
+            <th style="border:1px solid black">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in Model)
+        {
+        <tr>
+            <td style="border:1px solid black">@row.Eid</td>
+            <td style="border:1px solid black">@row.Name</td>
+            <td style="border:1px solid black">@row.Age</td>
+            <td style="border:1px solid black">@row.JoinDate</td>
+
+            <td style="border:1px solid black">@row.DOB</td>
+            <td style="border:1px solid black">@row.Salary</td>
+            <td style="border:1px solid black">@row.DepId</td>
+            <td style="border:1px solid black">@row.DesigId</td>
+            <td style="border:1px solid black">@row.Sex</td>
+            <td style="border:1px solid black">@row.PhNo</td>
+            <td style="border:1px solid black">@row.NoOfLeave</td>
+            <td style="border:1px solid black">
+                <button onclick="edit(@row.Eid)">Editt </button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    function edit(id) {
+        alert(id);
+        window.location.href = "/Employee/AddEmployee?id=" + id;
+    }
+
+    function trip() {
+        window.location.href = "/Employee/AddEmployee"
+    }
+    function PrintReport(id) {
+        $("#hdid").val(id);
+        $("#frmStudent").submit();
+    }
+
+    function addleave() {
+        window.location.href = "/Employee/addLeave"
+    }
+
+</script>

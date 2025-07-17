@@ -1,0 +1,18 @@
+﻿<form id="frmStudent" action="\Employee\PrintReport" method="post" name="frmStudent" target="_blank">
+    <input id="hdid" name="hdid" type="hidden" value="" />
+</form>
+
+
+<input onclick="window.open('/Employee/PrintReport?type=1', '_blank');" class="btn btn-primary btn-sm" type="button" value="Print Department Wise">
+<input onclick="window.open('/Employee/PrintReport?type=2', '_blank');" class="btn btn-primary btn-sm" type="button" value="Print Designation Wise">
+
+
+<button onclick="PrintReport()" class="btn btn-primary">PrintReport</button>
+
+<script
+function PrintReport(id) {
+        $("#hdid").val(id);
+        $("#frmStudent").submit();
+    }
+
+</script>

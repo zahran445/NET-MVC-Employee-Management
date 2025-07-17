@@ -1,0 +1,71 @@
+﻿
+
+@{
+    ViewBag.Title = "Add Designation";
+
+
+}
+
+
+<div class="card">
+    <h2 class="mb-4">Add Designation Details</h2>
+
+    <form id="frmLogin">
+        <div class="form-group">
+            <label for="id" class="form-label">MID</label>
+            <input type="number" class="form-control" id="mid" name="MId" value="@(Model==null?"":Model.MasterID)">
+        </div>
+
+        <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="Name" required value="@(Model==null?"":Model.MasterName)">
+        </div>
+
+
+        <div class="form-group">
+            @*<label for="type" class="form-label">Type</label>*@
+            <input type="hidden" class="form-control" id="type" name="type" required value="@(Model==null?"2":Model.MasterType)">
+        </div>
+
+
+
+
+
+
+
+        <hr />
+        <button type="button" onclick="addDesignation()" class="btn btn-primary">Submit</button>
+    </form>
+
+
+
+</div>
+
+
+<script>
+    function addDesignation() {
+
+        var frm = $('#frmLogin')
+        var frmdata = JSON.stringify(frm.serializeArray());
+        console.log(frmdata);
+
+        $.ajax({
+            type: "POST",
+            url: "/Employee/SaveDesignation",
+            dataType: "JSON",
+            contentType: "JSON",
+            data: JSON.stringify({ sdata: frmdata }),
+            success: function (response) {
+                if (response == "Sucess") {
+                    alert("Successfully Saved");
+                    window.location.href = "/Employee/DesigList";
+                }
+                else {
+                    alert("Error occured");
+                    //window.location.href = "/newlogin/error";
+                }
+            },
+            error: function (xhr, status, error) { }
+        });
+    }
+</script>

@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Add Employee";
+
+    var departmentList = ViewBag.DepartmentList as List<Employee.Models.Data.TblMaster>;
+    var designationList = ViewBag.DesignationList as List<Employee.Models.Data.TblMaster>;
+}
+}
+
+
+<div class="card">
+    <h2 class="mb-4">Leave Form</h2>
+
+    <form id="frmLogin">
+        <div class="form-group">
+            <label for="sno" class="form-label">EID</label>
+            <input type="number" class="form-control" id="eid" name="Id" value="@(Model==null?"":Model.Eid)">
+        </div>
+
+        <div class="form-group">
+            <label for="Name" class="form-label">Name</label>
+            <select class="form-control" id="Department" name="Department" required>
+                <option value="" disabled selected>-- Select Department --</option>
+                @foreach (var dept in departmentList)
+                {
+                    <option value="@dept.MasterID" @(Model != null && Model.DepId == dept.MasterName ? "selected" : "")>@dept.MasterName</option>
+                }
+
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="type" class="form-label">Type</label>
+            <input type="number" class="form-control" id="type" name="Type" required value="@(Model==null?"":Model.LeaveType)">
+        </div>
+
+        <div class="form-group">
+            <label for="FromDate" class="form-label">From Date</label>
+            <input type="date" class="form-control" id="FromDate" name="FromDate" required value="@(Model==null?"":Model.FromDate)">
+        </div>
+
+        <div class="form-group">
+            <label for="ToDate" class="form-label">To Date</label>
+            <input type="date" class="form-control" id="ToDate" name="ToDate" required value="@(Model==null?"":Model.DOB)">
+        </div>
+
+        <div class="form-group">
+            <label for="Days" class="form-label">Days</label>
+            <input type="number" class="form-control" id="Days" name="Days" required value="@(Model==null?"":Model.Salary)">
+        </div>
+
+
+        <div class="form-group">
+            <label for="Reason" class="form-label">Reason</label>
+            <input type="number" class="form-control" id="Reason" name="Reason" required value="@(Model==null?"":Model.PhNo)">
+        </div>
+
+       
+
+
+
+
+
+
+        <hr />
+        <button type="button" onclick="addLeave()" class="btn btn-primary">Submit</button>
+    </form>
+
+
+
+</div>
+
+
+<script>
+    function addLeave() {
+
+        var frm = $('#frmLogin')
+        var frmdata = JSON.stringify(frm.serializeArray());
+        console.log(frmdata);
+
+        $.ajax({
+            type: "POST",
+            url: "/Employee/addLeave",
+            dataType: "JSON",
+            contentType: "JSON",
+            data: JSON.stringify({ sdata: frmdata }),
+            success: function (response) {
+                if (response == "Sucess") {
+                    alert("Successfully Saved");
+                    window.location.href = "/Employee/LeaveList";
+                }
+                else {
+                    alert("Error occured");
+                    //window.location.href = "/newlogin/error";
+                }
+            },
+            error: function (xhr, status, error) { }
+        });
+    }
+</script>
+
